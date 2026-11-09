@@ -10,6 +10,8 @@ namespace _0_Lb
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Привет! Это первая версия кода");
+            Console.ReadKey();
         }
     }
 }
