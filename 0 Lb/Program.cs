@@ -10,7 +10,11 @@ namespace _0_Lb
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Привет! Это первая версия кода");
+            Console.WriteLine("Привет! Я внес изменения для проверки коммита!");
+            int a = 10;
+            int b = 5;
+            int sum = a + b;
+            Console.WriteLine($"Сумма чисел {a} и {b} равна: {sum}");
             Console.ReadKey();
         }
     }
