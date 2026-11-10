@@ -11,7 +11,7 @@ namespace _0_Lb
         static void Main(string[] args)
         {
             Console.WriteLine("Привет! Я внес изменения для проверки коммита!");
-            int firstNumber = 10;
+            int firstNumber = 10; //комментарий для коммита
             int secondNumber = 5;
             int sum = firstNumber + secondNumber;
             Console.WriteLine($"Сумма чисел {firstNumber} и {secondNumber} равна: {sum}");
