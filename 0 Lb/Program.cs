@@ -10,7 +10,8 @@ namespace _0_Lb
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Привет! Это мой последний коммит!");
+            Console.WriteLine("Привет! Ладно, пошутила, не последний))");
+            Console.WriteLine("Версия программы: 1.0.1");
             int firstNumber = 10; //комментарий для коммита
             int secondNumber = 5;
             int sum = firstNumber + secondNumber;
