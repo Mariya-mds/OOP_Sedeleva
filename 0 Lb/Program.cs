@@ -19,8 +19,10 @@ namespace _0_Lb
                 Console.WriteLine("Сумма четная");
             else
                 Console.WriteLine("Сумма нечетная");
+            Console.WriteLine("А это проверка с ветки Development");
             Console.WriteLine("Конец программы");
             Console.ReadKey();
         }
     }
+}
 }
