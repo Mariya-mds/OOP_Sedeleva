@@ -10,11 +10,15 @@ namespace _0_Lb
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Привет! Это мой последний коммит!");
+            Console.WriteLine("Привет! Ладно, пошутила, не последний))");
             int firstNumber = 10; //комментарий для коммита
             int secondNumber = 5;
             int sum = firstNumber + secondNumber;
             Console.WriteLine($"Сумма чисел {firstNumber} и {secondNumber} равна: {sum}");
+            if (sum % 2 == 0)
+                Console.WriteLine("Сумма четная");
+            else
+                Console.WriteLine("Сумма нечетная");
             Console.WriteLine("Конец программы");
             Console.ReadKey();
         }
