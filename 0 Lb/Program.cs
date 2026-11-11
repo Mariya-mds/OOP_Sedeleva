@@ -16,6 +16,7 @@ namespace _0_Lb
             int secondNumber = 5;
             int sum = firstNumber + secondNumber;
             Console.WriteLine($"Сумма чисел {firstNumber} и {secondNumber} равна: {sum}");
+            Console.WriteLine("Что ж, попробуем слить ветки");
             Console.WriteLine("Конец программы");
             Console.ReadKey();
         }
