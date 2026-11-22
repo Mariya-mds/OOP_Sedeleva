@@ -26,6 +26,17 @@
         private Gender _gender;
 
         /// <summary>
+        /// The constructor creates a person with the characteristics
+        /// </summary>
+        public Person(string name, string surname, int age, Gender gender) 
+        { 
+            Name = name;
+            Surname = surname;
+            Age = age;
+            Gender = gender;
+        }
+
+        /// <summary>
         /// Name verification and case adjustment
         /// </summary>
         public string Name
