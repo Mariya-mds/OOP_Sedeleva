@@ -16,6 +16,16 @@
         private string _surname = string.Empty;
 
         /// <summary>
+        /// Saves the person's age
+        /// </summary>
+        private int _age;
+
+        /// <summary>
+        /// Saves the person's gender
+        /// </summary>
+        private Gender _gender;
+
+        /// <summary>
         /// Name verification and case adjustment
         /// </summary>
         public string Name
@@ -54,6 +64,41 @@
                 }
                 _surname = value[0].ToString().ToUpper() +
                     value.Substring(1).ToLower();
+            }
+        }
+
+        /// <summary>
+        /// Age verification
+        /// </summary>
+        public int Age
+        {
+            get
+            {
+                return _age;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("The age should not be negative!",
+                        nameof(Age));
+                }
+                _age = value;
+            }
+        }
+
+        /// <summary>
+        /// Gender verification
+        /// </summary>
+        public Gender Gender
+        {
+            get
+            {
+                return _gender;
+            }
+            set
+            {
+                _gender = value;
             }
         }
     }
