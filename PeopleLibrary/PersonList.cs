@@ -24,7 +24,50 @@
         /// <returns>True if the person was removed; otherwise, false</returns>
         public bool RemovePerson(Person person)
         {
-            return _people.Remove(person); 
+            return _people.Remove(person);
+        }
+
+        /// <summary>
+        /// Removes a person by index
+        /// </summary>
+        public void RemovePersonAt(int index)
+        {
+            _people.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Gets a person by index
+        /// </summary>
+        public Person GetPersonAt(int index)
+        {
+            return _people[index];
+        }
+
+        /// <summary>
+        /// Gets the index of a person in the list
+        /// </summary>
+        public int GetPersonIndex(Person person)
+        {
+            return _people.IndexOf(person);
+        }
+
+        /// <summary>
+        /// Clears the list of people
+        /// </summary>
+        public void ClearPeople()
+        {
+            _people.Clear();
+        }
+
+        /// <summary>
+        /// Gets the number of people in the list
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return _people.Count;
+            }
         }
     }
 }
