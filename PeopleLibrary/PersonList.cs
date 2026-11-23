@@ -69,5 +69,20 @@
                 return _people.Count;
             }
         }
+
+        public string GetListInfo()
+        {
+            string result = "People:\n";
+            for (int i = 0; i < _people.Count; i++)
+            {
+                Person currentPerson = _people[i];
+                result += $"- name: {currentPerson.Name}\n" +
+                $"- surname: {currentPerson.Surname}\n" +
+                $"- age: {currentPerson.Age}\n" +
+                $"- gender: {currentPerson.Gender}\n" +
+                "\n";
+            }
+            return result;
+        }
     }
 }
