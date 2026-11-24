@@ -1,4 +1,5 @@
-﻿namespace PeopleLibrary
+﻿using System.Text.RegularExpressions;
+namespace PeopleLibrary
 {
     /// <summary>
     /// This class represents a person
@@ -49,11 +50,18 @@
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Name cannot be empty!",
+                    throw new ArgumentException("Имя не может быть пустым!",
                         nameof(Name));
                 }
-                _name = value[0].ToString().ToUpper() + 
-                    value.Substring(1).ToLower();
+                
+                if (!IsValidName(value))
+                {
+                    throw new ArgumentException(
+                        "Имя может содержать только русские/английские буквы," +
+                        " пробелы и дефисы!",
+                        nameof(Name));
+                }
+                _name = FormatName(value);
             }
         }
 
@@ -70,11 +78,18 @@
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Surname cannot be empty!",
+                    throw new ArgumentException("Фамилия не может быть пустой!",
                         nameof(Surname));
                 }
-                _surname = value[0].ToString().ToUpper() +
-                    value.Substring(1).ToLower();
+
+                if (!IsValidName(value))
+                {
+                    throw new ArgumentException(
+                        "Фамилия может содержать только русские/английские буквы," +
+                        " пробелы и дефисы!",
+                        nameof(Surname));
+                }
+                _surname = FormatName(value);
             }
         }
 
@@ -91,7 +106,7 @@
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("The age should not be negative!",
+                    throw new ArgumentException("Возраст не должен быть отрицательным!",
                         nameof(Age));
                 }
                 _age = value;
@@ -123,7 +138,7 @@
         /// </summary>
         private static readonly string[] _maleNames =
         {
-            "Иван", "Александр", "Дмитрий", "Сергей"
+            "Иван", "Александр", "Дмитрий", "Сергей", "леонардо вильгельм"
         };
 
 
@@ -132,7 +147,7 @@
         /// </summary>
         private static readonly string[] _femaleNames =
         {
-            "Мария", "Анна", "Екатерина", "Ольга"
+            "Мария", "Анна", "АННА-МАРИЯ", "Екатерина", "Ольга"
         };
 
         /// <summary>
@@ -140,7 +155,7 @@
         /// </summary>
         private static readonly string[] _maleSurnames =
         {
-            "Иванов", "Петров", "Сидоров", "Смирнов"
+            "ИвАнОв", "Петров", "Сидоров", "Смирнов", "SmiTh-JoNeS"
         };
 
         /// <summary>
@@ -148,7 +163,7 @@
         /// </summary>
         private static readonly string[] _femaleSurnames =
         {
-            "Иванова", "Петрова", "Сидорова", "Смирнова"
+            "Иванова", "ПетРова", "СидОровАа", "Смирнова",
         };
 
         /// <summary>
@@ -184,6 +199,45 @@
             int age = _random.Next(0, 101);
 
             return new Person(name, surname, age, gender);
+        }
+
+        /// <summary>
+        /// Checks whether the string is a valid first or last name
+        /// </summary>
+        private static bool IsValidName(string value)
+        {
+            return Regex.IsMatch(value, 
+                @"^[A-Za-zА-Яа-яЁё]+([ -][A-Za-zА-Яа-яЁё]+)*$");
+        }
+
+
+        /// <summary>
+        /// Formats the first and last name
+        /// </summary>
+        private static string FormatName(string value)
+        {
+            string result = "";
+            bool capitalizeNext = true;
+
+            foreach (char character in value)
+            {
+                if (character == ' ' || character == '-')
+                {
+                    result += character;
+                    capitalizeNext = true;
+                }
+                else if (capitalizeNext)
+                {
+                    result += char.ToUpper(character);
+                    capitalizeNext = false;
+                }
+                else
+                {
+                    result += char.ToLower(character);
+                }
+            }
+
+            return result;
         }
     }
 }

@@ -126,14 +126,72 @@ internal class Program
         Console.Write("Enter surname: ");
         string surname = Console.ReadLine() ?? string.Empty;
 
-        Console.Write("Enter age: ");
-        int age = int.Parse(Console.ReadLine() ?? string.Empty);
+        int age;
 
-        Console.Write("Enter gender (Male/Female): ");
-        Gender gender = Enum.Parse<Gender>(
-            Console.ReadLine() ?? string.Empty, true);
+        while (true)
+        {
+            Console.Write("Enter age: ");
+            string ageInput = Console.ReadLine() ?? string.Empty;
 
-        return new Person(name, surname, age, gender);
+            if (!int.TryParse(ageInput, out age))
+            {
+                Console.WriteLine("Возраст должен быть числом. Пожалуйста, введите значение повторно");
+                continue;
+            }
+
+            if (age < 0)
+            {
+                Console.WriteLine("Возраст не может быть отрицательным. Пожалуйста, введите значение повторно");
+                continue;
+            }
+
+            break;
+        }
+
+        Gender gender;
+
+        while (true)
+        {
+            Console.Write("Enter gender (Male/Female): ");
+            string genderInput = Console.ReadLine() ?? string.Empty;
+
+            if (Enum.TryParse(genderInput, true, out gender) &&
+                Enum.IsDefined(typeof(Gender), gender) &&
+                (gender == Gender.Male || gender == Gender.Female))
+            {
+                break;
+            }
+
+            Console.WriteLine("Некорректное значение пола. Введите Male или Female.");
+        }
+
+        while (true)
+        {
+            try
+            {
+                return new Person(name, surname, age, gender);
+            }
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine(exception.Message);
+                Console.WriteLine("Пожалуйста, проверьте введенные данные и исправьте ошибку");
+
+                if (exception.ParamName == nameof(Person.Name))
+                {
+                    Console.Write("Enter name: ");
+                    name = Console.ReadLine() ?? string.Empty;
+                }
+                else if (exception.ParamName == nameof(Person.Surname))
+                {
+                    Console.Write("Enter surname: ");
+                    surname = Console.ReadLine() ?? string.Empty;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
     }
 
     /// <summary>
