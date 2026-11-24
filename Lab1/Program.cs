@@ -56,6 +56,7 @@ internal class Program
         bool isSamePerson = object.ReferenceEquals(firstList.GetPersonAt(1), 
             secondList.GetPersonAt(3));
         Console.WriteLine($"Это один и тот же объект? - {isSamePerson}");
+        Console.WriteLine("");
 
         Console.ReadKey();
 
@@ -75,6 +76,7 @@ internal class Program
 
         Console.WriteLine(
             $"Иван остался тем же объектом во втором списке? - {isIvanAfterRemoval}");
+        Console.WriteLine("");
 
         Console.ReadKey();
 
