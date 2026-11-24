@@ -46,10 +46,10 @@ internal class Program
         Person personFromFirstList = firstList.GetPersonAt(1);
         secondList.AddPerson(personFromFirstList);
         
-        Console.WriteLine("Первый список после копирования:");
+        Console.WriteLine("Первый список после добавления Ивана во второй:");
         Console.WriteLine(firstList.GetListInfo());
 
-        Console.WriteLine("Второй список после копирования:");
+        Console.WriteLine("Второй список после добавления Ивана:");
         Console.WriteLine(secondList.GetListInfo());
 
         // Checking whether both lists contain the same person object
@@ -93,5 +93,59 @@ internal class Program
             $"Количество людей во втором списке: {secondList.Count}");
 
         Console.ReadKey();
+
+        Console.WriteLine("");
+        Console.WriteLine("Creating a new person:");
+
+        Person enteredPerson = ReadPersonFromConsole();
+        PrintPerson(enteredPerson);
+
+        Console.ReadKey();
+
+        Console.WriteLine("");
+        Console.WriteLine("Random people:");
+
+        for (int i = 0; i < 5; i++)
+        {
+            Person randomPerson = Person.GetRandomPerson();
+            PrintPerson(randomPerson);
+            Console.WriteLine();
+        }
+
+        Console.ReadKey();
     }
+
+    /// <summary>
+    /// Reads person information from the keyboard
+    /// </summary>
+    private static Person ReadPersonFromConsole()
+    {
+        Console.Write("Enter name: ");
+        string name = Console.ReadLine() ?? string.Empty;
+
+        Console.Write("Enter surname: ");
+        string surname = Console.ReadLine() ?? string.Empty;
+
+        Console.Write("Enter age: ");
+        int age = int.Parse(Console.ReadLine() ?? string.Empty);
+
+        Console.Write("Enter gender (Male/Female): ");
+        Gender gender = Enum.Parse<Gender>(
+            Console.ReadLine() ?? string.Empty, true);
+
+        return new Person(name, surname, age, gender);
+    }
+
+    /// <summary>
+    /// Displays person information
+    /// </summary>
+    private static void PrintPerson(Person person)
+    {
+        Console.WriteLine("Person:");
+        Console.WriteLine($"- name: {person.Name}");
+        Console.WriteLine($"- surname: {person.Surname}");
+        Console.WriteLine($"- age: {person.Age}");
+        Console.WriteLine($"- gender: {person.Gender}");
+    }
+
 }

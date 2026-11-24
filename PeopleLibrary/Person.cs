@@ -112,5 +112,78 @@
                 _gender = value;
             }
         }
+
+        /// <summary>
+        /// Generates random values
+        /// </summary>
+        private static readonly Random _random = new Random();
+
+        /// <summary>
+        /// Stores male names
+        /// </summary>
+        private static readonly string[] _maleNames =
+        {
+            "Иван", "Александр", "Дмитрий", "Сергей"
+        };
+
+
+        /// <summary>
+        /// Stores female names
+        /// </summary>
+        private static readonly string[] _femaleNames =
+        {
+            "Мария", "Анна", "Екатерина", "Ольга"
+        };
+
+        /// <summary>
+        /// Stores male surnames
+        /// </summary>
+        private static readonly string[] _maleSurnames =
+        {
+            "Иванов", "Петров", "Сидоров", "Смирнов"
+        };
+
+        /// <summary>
+        /// Stores female surnames
+        /// </summary>
+        private static readonly string[] _femaleSurnames =
+        {
+            "Иванова", "Петрова", "Сидорова", "Смирнова"
+        };
+
+        /// <summary>
+        /// Creates a person with random characteristics
+        /// </summary>
+        public static Person GetRandomPerson()
+        {
+            Gender gender;
+
+            if (_random.Next(2) == 0)
+            {
+                gender = Gender.Male;
+            }
+            else
+            {
+                gender = Gender.Female;
+            }
+
+            string name;
+            string surname;
+
+            if (gender == Gender.Male)
+            {
+                name = _maleNames[_random.Next(_maleNames.Length)];
+                surname = _maleSurnames[_random.Next(_maleSurnames.Length)];
+            }
+            else
+            {
+                name = _femaleNames[_random.Next(_femaleNames.Length)];
+                surname = _femaleSurnames[_random.Next(_femaleSurnames.Length)];
+            }
+
+            int age = _random.Next(0, 101);
+
+            return new Person(name, surname, age, gender);
+        }
     }
 }
