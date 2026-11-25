@@ -1,7 +1,7 @@
 ﻿namespace PeopleLibrary
 {
     /// <summary>
-    /// This enumeration of the person's gender
+    /// Перечисление пола человека
     /// </summary>
     public enum Gender
     {

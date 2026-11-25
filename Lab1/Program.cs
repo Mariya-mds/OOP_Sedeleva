@@ -1,10 +1,17 @@
 ﻿using PeopleLibrary;
 
+/// <summary>
+/// Точка входа в программу
+/// </summary>
 internal class Program
 {
-    static void Main(string[] args)
+    /// <summary>
+    /// Точка входа
+    /// </summary>
+    private static void Main(string[] args)
     {
-        // 3a.Creating two person lists 
+        // 3a. Создание двух списков людей
+
         PersonList firstList = new PersonList();
         
         Person firstPerson = new Person("МАРИЯ", "СЕДЕЛЕВА", 23, Gender.Female);
@@ -25,7 +32,8 @@ internal class Program
         secondList.AddPerson(fifthPerson);
         secondList.AddPerson(sixthPerson);
 
-        // 3b.Displaying the contents of both lists
+        // 3b. Вывод содержимого обоих списков
+
         Console.WriteLine("Первый список:");
         Console.WriteLine(firstList.GetListInfo());
 
@@ -34,7 +42,8 @@ internal class Program
 
         Console.ReadKey();
 
-        // 3c.Adding a new person to the first list
+        // 3c. Добавление нового человека в первый список
+
         Person seventhPerson = new Person("яна", "СМИРНОВА", 29, Gender.Female);
         firstList.AddPerson(seventhPerson);
         Console.WriteLine("Первый список после добавления человека: ");
@@ -42,7 +51,8 @@ internal class Program
 
         Console.ReadKey();
 
-        // 3d.Adding the second person from the first list to the second list
+        // 3d. Добавление второго человека из первого списка во второй список
+
         Person personFromFirstList = firstList.GetPersonAt(1);
         secondList.AddPerson(personFromFirstList);
         
@@ -52,17 +62,20 @@ internal class Program
         Console.WriteLine("Второй список после добавления Ивана:");
         Console.WriteLine(secondList.GetListInfo());
 
-        // Checking whether both lists contain the same person object
-        bool isSamePerson = object.ReferenceEquals(firstList.GetPersonAt(1), 
+        // Проверка, содержат ли оба списка один и тот же объект person
+
+        bool isSamePerson = ReferenceEquals(firstList.GetPersonAt(1), 
             secondList.GetPersonAt(3));
         Console.WriteLine($"Это один и тот же объект? - {isSamePerson}");
-        Console.WriteLine("");
+        Console.WriteLine();
 
         Console.ReadKey();
 
-        // 3e.Removing the second person from the first list
+        // 3e. Удаление второго человека из первого списка
+
         bool isRemovedFromFirstList = firstList.RemovePerson(secondPerson);
-        Console.WriteLine($"Иван удален из первого списка: {isRemovedFromFirstList}");
+        Console.WriteLine($"Иван удален из первого списка: " +
+            $"{isRemovedFromFirstList}");
 
         Console.WriteLine("Первый список после удаления Ивана:");
         Console.WriteLine(firstList.GetListInfo());
@@ -70,17 +83,19 @@ internal class Program
         Console.WriteLine("Второй список после удаления Ивана из первого:");
         Console.WriteLine(secondList.GetListInfo());
 
-        // Checking whether the person object still exists in the second list
-        bool isIvanAfterRemoval = object.ReferenceEquals(personFromFirstList,
+        // Проверка, существует ли объект person все еще во втором списке
+
+        bool isIvanAfterRemoval = ReferenceEquals(personFromFirstList,
             secondList.GetPersonAt(3));
 
-        Console.WriteLine(
-            $"Иван остался тем же объектом во втором списке? - {isIvanAfterRemoval}");
+        Console.WriteLine($"Иван остался тем же объектом " +
+            $"во втором списке? - {isIvanAfterRemoval}");
         Console.WriteLine("");
 
         Console.ReadKey();
 
-        // 3f.Clearing the second list
+        // 3f. Очистка второго списка
+
         secondList.ClearPeople();
 
         Console.WriteLine("Первый список после очистки второго:");
@@ -94,16 +109,20 @@ internal class Program
 
         Console.ReadKey();
 
-        Console.WriteLine("");
-        Console.WriteLine("Creating a new person:");
+        // Создание человека с вводом данных с клавиатуры
+
+        Console.WriteLine();
+        Console.WriteLine("Введите данные нового человека:");
 
         Person enteredPerson = ReadPersonFromConsole();
         PrintPerson(enteredPerson);
 
         Console.ReadKey();
 
-        Console.WriteLine("");
-        Console.WriteLine("Random people:");
+        // Генерация случайных людей 
+
+        Console.WriteLine();
+        Console.WriteLine("Рандом:");
 
         for (int i = 0; i < 5; i++)
         {
@@ -116,54 +135,62 @@ internal class Program
     }
 
     /// <summary>
-    /// Reads person information from the keyboard
+    /// Читает информацию о человеке с клавиатуры
     /// </summary>
     private static Person ReadPersonFromConsole()
     {
-        Console.Write("Enter name: ");
+        Console.Write("Введите имя: ");
         string name = Console.ReadLine() ?? string.Empty;
 
-        Console.Write("Enter surname: ");
+        Console.Write("Введите фамилию: ");
         string surname = Console.ReadLine() ?? string.Empty;
+
+        // Ввод возраста с проверкой правильности
 
         int age;
 
         while (true)
         {
-            Console.Write("Enter age: ");
+            Console.Write("Введите возвраст: ");
             string ageInput = Console.ReadLine() ?? string.Empty;
 
             if (!int.TryParse(ageInput, out age))
             {
-                Console.WriteLine("Возраст должен быть числом. Пожалуйста, введите значение повторно");
+                Console.WriteLine("Возраст должен быть числом. " +
+                    "Пожалуйста, введите значение повторно");
                 continue;
             }
 
             if (age < 0)
             {
-                Console.WriteLine("Возраст не может быть отрицательным. Пожалуйста, введите значение повторно");
+                Console.WriteLine("Возраст не может быть отрицательным. " +
+                    "Пожалуйста, введите значение повторно");
                 continue;
             }
 
             break;
         }
 
+        // Ввод пола с проверкой правильности
+
         Gender gender;
 
         while (true)
         {
-            Console.Write("Enter gender (Male/Female): ");
+            Console.Write("Введите гендер (Male/Female): ");
             string genderInput = Console.ReadLine() ?? string.Empty;
 
             if (Enum.TryParse(genderInput, true, out gender) &&
-                Enum.IsDefined(typeof(Gender), gender) &&
-                (gender == Gender.Male || gender == Gender.Female))
+                Enum.IsDefined(typeof(Gender), gender))
             {
                 break;
             }
 
-            Console.WriteLine("Некорректное значение пола. Введите Male или Female.");
+            Console.WriteLine("Некорректное значение пола. " +
+                "Введите Male или Female");
         }
+
+        // Создание объекта Person с повторным вводом
 
         while (true)
         {
@@ -174,16 +201,17 @@ internal class Program
             catch (ArgumentException exception)
             {
                 Console.WriteLine(exception.Message);
-                Console.WriteLine("Пожалуйста, проверьте введенные данные и исправьте ошибку");
+                Console.WriteLine("Пожалуйста, проверьте введенные данные " +
+                    "и исправьте ошибку");
 
                 if (exception.ParamName == nameof(Person.Name))
                 {
-                    Console.Write("Enter name: ");
+                    Console.Write("Введите имя: ");
                     name = Console.ReadLine() ?? string.Empty;
                 }
                 else if (exception.ParamName == nameof(Person.Surname))
                 {
-                    Console.Write("Enter surname: ");
+                    Console.Write("Введите фамилию: ");
                     surname = Console.ReadLine() ?? string.Empty;
                 }
                 else
@@ -195,15 +223,15 @@ internal class Program
     }
 
     /// <summary>
-    /// Displays person information
+    /// Выводит информацию о человеке
     /// </summary>
     private static void PrintPerson(Person person)
     {
-        Console.WriteLine("Person:");
-        Console.WriteLine($"- name: {person.Name}");
-        Console.WriteLine($"- surname: {person.Surname}");
-        Console.WriteLine($"- age: {person.Age}");
-        Console.WriteLine($"- gender: {person.Gender}");
+        Console.WriteLine("Пипл:");
+        Console.WriteLine($"- имя: {person.Name}");
+        Console.WriteLine($"- фамилия: {person.Surname}");
+        Console.WriteLine($"- лет: {person.Age}");
+        Console.WriteLine($"- гендер: {person.Gender}");
     }
 
 }

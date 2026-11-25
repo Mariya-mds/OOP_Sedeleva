@@ -1,22 +1,25 @@
 ﻿namespace PeopleLibrary
 {
     /// <summary>
-    /// This class represents a list of people
+    /// Класс который представляет список людей
+    /// Хранит людей в массиве, автоматически увеличивает емкость массива
     /// </summary>
     public class PersonList
     {
         /// <summary>
-        /// Stores the array of people
+        /// Массив для хранения людей
+        /// Емкость массива может быть больше фактического количества людей
         /// </summary>
         private Person[] _people;
 
         /// <summary>
-        /// Stores the actual number of people in the list
+        /// Фактическое количество людей в списке
         /// </summary>
         private int _count;
 
         /// <summary>
-        /// Initializes a new instance of the PersonList class
+        /// Создает новый пустой список людей
+        /// Начальная емкость массива 3
         /// </summary>
         public PersonList()
         {
@@ -25,7 +28,9 @@
         }
 
         /// <summary>
-        /// Increases the capacity of the array when necessary
+        /// Увеличивает емкость массива, когда необходимо
+        /// Если массив заполнен, создается новый массив вдвое большего размера,
+        /// в который копируются все существующие элементы
         /// </summary>
         private void ProvCapacity()
         {
@@ -45,7 +50,8 @@
         }
 
         /// <summary>
-        /// Adds a person to the list
+        /// Добавляет человека в список
+        /// При необходимости предварительно увеличивает емкость массива
         /// </summary>
         public void AddPerson(Person person)
         {
@@ -56,13 +62,13 @@
         }
 
         /// <summary>
-        /// Gets the index of a person if they are in the list
+        /// Возвращает индекс человека в списке, если он там присутствует
         /// </summary>
         public int GetPersonIndex(Person person)
         {
             for (int i = 0; i < _count; i++)
             {
-                if (object.ReferenceEquals(_people[i], person))
+                if (ReferenceEquals(_people[i], person))
                 {
                     return i;
                 }
@@ -72,7 +78,9 @@
         }
 
         /// <summary>
-        /// Removes a person by index
+        /// Удаляет человека по указанному индексу
+        /// Все элементы после удаленного сдвигаются на одну позицию влево,
+        /// а последняя ячейка очищается
         /// </summary>
         public void RemovePersonAt(int index)
         {
@@ -92,9 +100,9 @@
         }
 
         /// <summary>
-        /// Removes a person from the list
+        /// Удаляет человека из списка
         /// </summary>
-        /// <returns>True if the person was removed, otherwise false</returns>
+        /// <returns>True если человек был найден и удален, иначе false</returns>
         public bool RemovePerson(Person person)
         {
             int index = GetPersonIndex(person);
@@ -109,7 +117,7 @@
         }
 
         /// <summary>
-        /// Gets a person by index
+        /// Возвращает человека по указанному индексу
         /// </summary>
         public Person GetPersonAt(int index)
         {
@@ -122,7 +130,7 @@
         }
 
         /// <summary>
-        /// Clears the list of people
+        /// Очищает список людей
         /// </summary>
         public void ClearPeople()
         {
@@ -136,20 +144,20 @@
         }
 
         /// <summary>
-        /// Gets information about people in the list
+        /// Возвращает информацию обо всех людях в списке
         /// </summary>
         public string GetListInfo()
         {
-            string result = "People:\n";
+            string result = "Люди в списке:\n";
 
             for (int i = 0; i < _count; i++)
             {
                 Person currentPerson = _people[i];
 
-                result += $"- name: {currentPerson.Name}\n" +
-                          $"- surname: {currentPerson.Surname}\n" +
-                          $"- age: {currentPerson.Age}\n" +
-                          $"- gender: {currentPerson.Gender}\n" +
+                result += $"- имя: {currentPerson.Name}\n" +
+                          $"- фамилия: {currentPerson.Surname}\n" +
+                          $"- лет: {currentPerson.Age}\n" +
+                          $"- гендер: {currentPerson.Gender}\n" +
                           "\n";
             }
 
@@ -157,7 +165,7 @@
         }
 
         /// <summary>
-        /// Gets the number of people in the list
+        /// Возвращает количество людей в списке
         /// </summary>
         public int Count
         {
