@@ -139,6 +139,7 @@ internal class Program
     /// </summary>
     private static Person ReadPersonFromConsole()
     {
+        //TODO: refactor
         Console.Write("Введите имя: ");
         string name = Console.ReadLine() ?? string.Empty;
 
@@ -228,6 +229,7 @@ internal class Program
     private static void PrintPerson(Person person)
     {
         Console.WriteLine("Пипл:");
+        //TODO: duplication
         Console.WriteLine($"- имя: {person.Name}");
         Console.WriteLine($"- фамилия: {person.Surname}");
         Console.WriteLine($"- лет: {person.Age}");

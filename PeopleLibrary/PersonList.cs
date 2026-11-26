@@ -23,6 +23,7 @@
         /// </summary>
         public PersonList()
         {
+            //TODO: refactor
             _people = new Person[3];
             _count = 0;
         }
@@ -39,6 +40,7 @@
                 return;
             }
 
+            //TODO: to const (gf)
             Person[] newPeople = new Person[_people.Length * 2];
 
             for (int i = 0; i < _count; i++)
@@ -84,6 +86,7 @@
         /// </summary>
         public void RemovePersonAt(int index)
         {
+            //TODO: back resize
             if (index < 0 || index >= _count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -95,6 +98,7 @@
             }
 
             _count--;
+            //TOOD: not safe
             _people[_count] = null;
             //Array.Clear(_people, _count, 1);
         }
@@ -154,6 +158,7 @@
             {
                 Person currentPerson = _people[i];
 
+                //TODO: duplication
                 result += $"- имя: {currentPerson.Name}\n" +
                           $"- фамилия: {currentPerson.Surname}\n" +
                           $"- лет: {currentPerson.Age}\n" +
@@ -164,6 +169,7 @@
             return result;
         }
 
+        //TODO: refactor
         /// <summary>
         /// Возвращает количество людей в списке
         /// </summary>

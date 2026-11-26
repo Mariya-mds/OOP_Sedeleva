@@ -24,6 +24,7 @@ namespace PeopleLibrary
         /// </summary>
         private int _age;
 
+        //TODO: remove
         /// <summary>
         /// Хранит пол человека
         /// </summary>
@@ -58,6 +59,7 @@ namespace PeopleLibrary
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Имя не может быть пустым!",
@@ -87,6 +89,7 @@ namespace PeopleLibrary
             }
             set
             {
+                //TODO: duplication
                 if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Фамилия не может быть пустой!",
@@ -116,6 +119,7 @@ namespace PeopleLibrary
             }
             set
             {
+                //TODO: domain limits
                 if (value < 0)
                 {
                     throw new ArgumentException("Возраст не должен быть" +
@@ -136,6 +140,7 @@ namespace PeopleLibrary
         /// </summary>
         private static readonly Random _random = new Random();
 
+        //TODO: refactoring
         /// <summary>
         /// Список мужских имен для генерации случайного человека
         /// </summary>
@@ -173,6 +178,8 @@ namespace PeopleLibrary
         /// </summary>
         public static Person GetRandomPerson()
         {
+            //TODO: refactoring
+            
             Gender gender;
 
             if (_random.Next(2) == 0)
@@ -210,6 +217,7 @@ namespace PeopleLibrary
         /// </summary>
         private static bool IsValidName(string value)
         {
+            //TODO: different languages
             return Regex.IsMatch(value, 
                 @"^[A-Za-zА-Яа-яЁё]+([ -][A-Za-zА-Яа-яЁё]+)*$");
         }
