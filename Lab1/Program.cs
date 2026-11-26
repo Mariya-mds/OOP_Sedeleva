@@ -140,7 +140,7 @@ internal class Program
     /// </summary>
     private static Person ReadPersonFromConsole()
     {
-        //TODO: refactor +
+        //TODO: refactor
         Person person = new Person("Имя", "Фамилия", Person.MinAge, Gender.Male);
 
         while (true)
@@ -170,6 +170,7 @@ internal class Program
                 Console.WriteLine(exception.Message);
             }
         }
+
         while (true)
         {
             try
@@ -193,7 +194,8 @@ internal class Program
             try
             {
                 Console.Write("Введите гендер (Male/Female): ");
-                person.Gender = Enum.Parse<Gender>(Console.ReadLine() ?? string.Empty, true);
+                person.Gender = Enum.Parse<Gender>(Console.ReadLine() 
+                    ?? string.Empty, true);
 
                 if (!Enum.IsDefined(typeof(Gender), person.Gender))
                 {
@@ -217,8 +219,6 @@ internal class Program
     private static void PrintPerson(Person person)
     {
         Console.WriteLine("Пипл:");
-        //TODO: duplication +
         Console.WriteLine(person.GetInfo());
     }
-
 }

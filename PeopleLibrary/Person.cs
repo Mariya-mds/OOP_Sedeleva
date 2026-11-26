@@ -9,7 +9,12 @@ namespace PeopleLibrary
     /// </summary>
     public class Person
     {
+        //TODO: XML
+        //TODO: refactor
         public static int MaxAge = 100;
+
+        //TODO: XML
+        //TODO: refactor
         public static int MinAge = 0;
 
         /// <summary>
@@ -26,8 +31,6 @@ namespace PeopleLibrary
         /// Хранит возраст человека. Не может быть отрицательным
         /// </summary>
         private int _age;
-
-        //TODO: remove +
 
         /// <summary>
         /// Создает нового человека с заданными характеристиками
@@ -85,7 +88,6 @@ namespace PeopleLibrary
             }
             set
             {
-                //TODO: duplication +
                 _name = Validate(value, "Имя", nameof(Name));
             }
         }
@@ -103,7 +105,6 @@ namespace PeopleLibrary
             }
             set
             {
-                //TODO: duplication +
                 _surname = Validate(value, "Фамилия", nameof(Surname));
             }
         }
@@ -120,9 +121,9 @@ namespace PeopleLibrary
             }
             set
             {
-                //TODO: domain limits +
                 if (value < 0 || value > MaxAge)
                 {
+                    //TODO: redo
                     throw new ArgumentException("Возраст должен быть" +
                         " положительным и достижимым!", nameof(Age));
                 }
@@ -140,8 +141,6 @@ namespace PeopleLibrary
         /// Используется при создании случайного человека
         /// </summary>
         private static readonly Random _random = new Random();
-
-        //TODO: refactoring +
 
         /// <summary>
         /// Создает человека со случайными характеристиками
@@ -168,7 +167,6 @@ namespace PeopleLibrary
                 "Иванова", "ПетРова", "СидОровА", "Смирнова"
             };
 
-            //TODO: refactoring +
 
             Gender gender = _random.Next(2) == 0 
                 ? Gender.Male 
@@ -196,7 +194,6 @@ namespace PeopleLibrary
         /// </summary>
         private static bool IsValidName(string value)
         {
-            //TODO: different languages +
             return Regex.IsMatch(value,
                 @"^([A-Za-z]+([ -][A-Za-z]+)*|[А-Яа-яЁё]+([ -][А-Яа-яЁё]+)*)$");
         }

@@ -6,9 +6,14 @@
     /// </summary>
     public class PersonList
     {
+        //TODO: RSDN
+        //TODO: XML
+        //default
         // Начальная вместимость массива
         int defoltBufer = 3;
 
+        //TODO: RSDN
+        //TODO: XML
         // Коэффициент расширение
         int growthFactor = 2;
 
@@ -28,7 +33,6 @@
         /// </summary>
         public PersonList()
         {
-            //TODO: refactor +
             _people = new Person[defoltBufer];
             _count = 0;
         }
@@ -45,7 +49,6 @@
                 return;
             }
 
-            //TODO: to const (gf) +
             Person[] newPeople = new Person[_people.Length * growthFactor];
 
             for (int i = 0; i < _count; i++)
@@ -91,7 +94,6 @@
         /// </summary>
         public void RemovePersonAt(int index)
         {
-            //TODO: back resize +
             if (index < 0 || index >= _count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -123,6 +125,7 @@
                 return;
             }
 
+            //TODO: to const
             int newSize = _people.Length / 2;
 
             if (newSize < _count)
@@ -198,7 +201,6 @@
             return result;
         }
 
-        //TODO: refactor +
         /// <summary>
         /// Возвращает количество людей в списке
         /// </summary>
