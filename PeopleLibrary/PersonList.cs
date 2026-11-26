@@ -6,15 +6,18 @@
     /// </summary>
     public class PersonList
     {
-        //TODO: RSDN
-        //TODO: XML
-        //default
-        // Начальная вместимость массива
-        int defoltBufer = 3;
+        //TODO: RSDN +
+        //TODO: XML +
+        /// <summary>
+        /// Начальная вместимость массива
+        /// </summary>
+        int defaultBufer = 3;
 
-        //TODO: RSDN
-        //TODO: XML
-        // Коэффициент расширение
+        //TODO: RSDN +
+        //TODO: XML +
+        /// <summary>
+        /// Коэффициент расширения
+        /// </summary>
         int growthFactor = 2;
 
         /// <summary>
@@ -33,7 +36,7 @@
         /// </summary>
         public PersonList()
         {
-            _people = new Person[defoltBufer];
+            _people = new Person[defaultBufer];
             _count = 0;
         }
 
@@ -119,14 +122,14 @@
         /// </summary>
         private void Shrink()
         {
-            if (_people.Length <= defoltBufer || 
+            if (_people.Length <= defaultBufer || 
                 _count > _people.Length / growthFactor)
             {
                 return;
             }
 
-            //TODO: to const
-            int newSize = _people.Length / 2;
+            //TODO: to const +
+            int newSize = _people.Length / growthFactor;
 
             if (newSize < _count)
             {

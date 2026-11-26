@@ -9,13 +9,19 @@ namespace PeopleLibrary
     /// </summary>
     public class Person
     {
-        //TODO: XML
-        //TODO: refactor
-        public static int MaxAge = 100;
+        //TODO: XML +
+        //TODO: refactor +
+        /// <summary>
+        /// Максимальное возможное число для ввода возраста
+        /// </summary>
+        public const int MaxAge = 100;
 
-        //TODO: XML
-        //TODO: refactor
-        public static int MinAge = 0;
+        //TODO: XML +
+        //TODO: refactor +
+        /// <summary>
+        /// Минимальное возможное число для ввода возраста
+        /// </summary>
+        public const int MinAge = 0;
 
         /// <summary>
         /// Хранит имя человека в отформатированном виде
@@ -123,9 +129,9 @@ namespace PeopleLibrary
             {
                 if (value < 0 || value > MaxAge)
                 {
-                    //TODO: redo
+                    //TODO: redo +
                     throw new ArgumentException("Возраст должен быть" +
-                        " положительным и достижимым!", nameof(Age));
+                        $" положительным и в диапазоне от {MinAge} до {MaxAge}!", nameof(Age));
                 }
                 _age = value;
             }
