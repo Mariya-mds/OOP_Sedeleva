@@ -9,6 +9,9 @@ namespace PeopleLibrary
     /// </summary>
     public class Person
     {
+        public static int MaxAge = 100;
+        public static int MinAge = 0;
+
         /// <summary>
         /// Хранит имя человека в отформатированном виде
         /// </summary>
@@ -24,11 +27,7 @@ namespace PeopleLibrary
         /// </summary>
         private int _age;
 
-        //TODO: remove
-        /// <summary>
-        /// Хранит пол человека
-        /// </summary>
-        private Gender _gender;
+        //TODO: remove +
 
         /// <summary>
         /// Создает нового человека с заданными характеристиками
@@ -47,6 +46,33 @@ namespace PeopleLibrary
         }
 
         /// <summary>
+        /// Проверяет и форматирует значение имени/фамилии
+        /// </summary>
+        /// <param name="value">Проверяемое значение</param>
+        /// <param name="fieldName">Название поля для сообщения</param>
+        /// <param name="paramName">Имя свойства для ParamName</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        private static string Validate(string value, 
+            string fieldName, string paramName)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException(
+                    $"{fieldName} не может быть пустым!", paramName);
+            }
+
+            if (!IsValidName(value))
+            {
+                throw new ArgumentException(
+                    $"{fieldName} может содержать только русские/английские буквы," +
+                    " пробелы и дефисы!", paramName);
+            }
+
+            return FormatName(value);
+        }
+
+        /// <summary>
         /// Имя человека
         /// При установке значения проверяется, что оно не пустое и содержит
         /// только русские/английские буквы, пробелы и дефисы
@@ -59,20 +85,8 @@ namespace PeopleLibrary
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Имя не может быть пустым!",
-                        nameof(Name));
-                }
-                
-                if (!IsValidName(value))
-                {
-                    throw new ArgumentException(
-                        "Имя может содержать только русские/английские буквы," +
-                        " пробелы и дефисы!", nameof(Name));
-                }
-                _name = FormatName(value);
+                //TODO: duplication +
+                _name = Validate(value, "Имя", nameof(Name));
             }
         }
 
@@ -89,21 +103,8 @@ namespace PeopleLibrary
             }
             set
             {
-                //TODO: duplication
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Фамилия не может быть пустой!",
-                        nameof(Surname));
-                }
-
-                if (!IsValidName(value))
-                {
-                    throw new ArgumentException(
-                        "Фамилия может содержать только русские/английские буквы," +
-                        " пробелы и дефисы!",
-                        nameof(Surname));
-                }
-                _surname = FormatName(value);
+                //TODO: duplication +
+                _surname = Validate(value, "Фамилия", nameof(Surname));
             }
         }
 
@@ -119,11 +120,11 @@ namespace PeopleLibrary
             }
             set
             {
-                //TODO: domain limits
-                if (value < 0)
+                //TODO: domain limits +
+                if (value < 0 || value > MaxAge)
                 {
-                    throw new ArgumentException("Возраст не должен быть" +
-                        " отрицательным!", nameof(Age));
+                    throw new ArgumentException("Возраст должен быть" +
+                        " положительным и достижимым!", nameof(Age));
                 }
                 _age = value;
             }
@@ -140,72 +141,50 @@ namespace PeopleLibrary
         /// </summary>
         private static readonly Random _random = new Random();
 
-        //TODO: refactoring
-        /// <summary>
-        /// Список мужских имен для генерации случайного человека
-        /// </summary>
-        private static readonly string[] _maleNames =
-        {
-            "Иван", "Александр", "Дмитрий", "Сергей", "леонардо вильгельм"
-        };
-
-        /// <summary>
-        /// Список женских имен для генерации случайного человека
-        /// </summary>
-        private static readonly string[] _femaleNames =
-        {
-            "Мария", "Анна", "АННА-МАРИЯ", "Екатерина", "Ольга"
-        };
-
-        /// <summary>
-        /// Список мужских фамилий для генерации случайного человека
-        /// </summary>
-        private static readonly string[] _maleSurnames =
-        {
-            "ИвАнОв", "Петров", "Сидоров", "Смирнов", "SmiTh-JoNeS"
-        };
-
-        /// <summary>
-        /// Список женских фамилий для генерации случайного человека
-        /// </summary>
-        private static readonly string[] _femaleSurnames =
-        {
-            "Иванова", "ПетРова", "СидОровА", "Смирнова"
-        };
+        //TODO: refactoring +
 
         /// <summary>
         /// Создает человека со случайными характеристиками
         /// </summary>
         public static Person GetRandomPerson()
         {
-            //TODO: refactoring
-            
-            Gender gender;
-
-            if (_random.Next(2) == 0)
+            string[] maleNames =
             {
-                gender = Gender.Male;
-            }
-            else
-            {
-                gender = Gender.Female;
-            }
+                "Иван", "Александр", "Дмитрий", "Сергей", "леонардо вильгельм"
+            };
 
-            string name;
-            string surname;
-
-            if (gender == Gender.Male)
+            string[] femaleNames =
             {
-                name = _maleNames[_random.Next(_maleNames.Length)];
-                surname = _maleSurnames[_random.Next(_maleSurnames.Length)];
-            }
-            else
-            {
-                name = _femaleNames[_random.Next(_femaleNames.Length)];
-                surname = _femaleSurnames[_random.Next(_femaleSurnames.Length)];
-            }
+                "Мария", "Анна", "АННА-МАРИЯ", "Екатерина", "Ольга"
+            };
 
-            int age = _random.Next(0, 101);
+            string[] maleSurnames =
+            {
+                "ИвАнОв", "Петров", "Сидоров", "Смирнов", "SmiTh-JoNeS"
+            };
+
+            string[] femaleSurnames =
+            { 
+                "Иванова", "ПетРова", "СидОровА", "Смирнова"
+            };
+
+            //TODO: refactoring +
+
+            Gender gender = _random.Next(2) == 0 
+                ? Gender.Male 
+                : Gender.Female;
+
+            string[] names = gender == Gender.Male 
+                ? maleNames 
+                : femaleNames;
+            string[] surnames = gender == Gender.Male 
+                ? maleSurnames 
+                : femaleSurnames;
+
+            string name = names[_random.Next(names.Length)];
+            string surname = surnames[_random.Next(surnames.Length)];
+
+            int age = _random.Next(MinAge, MaxAge);
 
             return new Person(name, surname, age, gender);
         }
@@ -217,9 +196,9 @@ namespace PeopleLibrary
         /// </summary>
         private static bool IsValidName(string value)
         {
-            //TODO: different languages
-            return Regex.IsMatch(value, 
-                @"^[A-Za-zА-Яа-яЁё]+([ -][A-Za-zА-Яа-яЁё]+)*$");
+            //TODO: different languages +
+            return Regex.IsMatch(value,
+                @"^([A-Za-z]+([ -][A-Za-z]+)*|[А-Яа-яЁё]+([ -][А-Яа-яЁё]+)*)$");
         }
 
         /// <summary>
@@ -237,6 +216,17 @@ namespace PeopleLibrary
             }
 
             return string.Join(" ", words);
+        }
+
+        /// <summary>
+        /// Представление человека
+        /// </summary>
+        public string GetInfo()
+        {
+            return $"- имя: {Name}\n" +
+                   $"- фамилия: {Surname}\n" +
+                   $"- лет: {Age}\n" +
+                   $"- гендер: {Gender}\n";
         }
     }
 }

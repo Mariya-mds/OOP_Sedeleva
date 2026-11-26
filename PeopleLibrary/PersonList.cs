@@ -6,6 +6,12 @@
     /// </summary>
     public class PersonList
     {
+        // Начальная вместимость массива
+        int defoltBufer = 3;
+
+        // Коэффициент расширение
+        int growthFactor = 2;
+
         /// <summary>
         /// Массив для хранения людей
         /// Емкость массива может быть больше фактического количества людей
@@ -19,12 +25,11 @@
 
         /// <summary>
         /// Создает новый пустой список людей
-        /// Начальная емкость массива 3
         /// </summary>
         public PersonList()
         {
-            //TODO: refactor
-            _people = new Person[3];
+            //TODO: refactor +
+            _people = new Person[defoltBufer];
             _count = 0;
         }
 
@@ -40,8 +45,8 @@
                 return;
             }
 
-            //TODO: to const (gf)
-            Person[] newPeople = new Person[_people.Length * 2];
+            //TODO: to const (gf) +
+            Person[] newPeople = new Person[_people.Length * growthFactor];
 
             for (int i = 0; i < _count; i++)
             {
@@ -86,7 +91,7 @@
         /// </summary>
         public void RemovePersonAt(int index)
         {
-            //TODO: back resize
+            //TODO: back resize +
             if (index < 0 || index >= _count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -98,9 +103,41 @@
             }
 
             _count--;
-            //TOOD: not safe
+
+            //TOOD: not safe +
             _people[_count] = null;
-            //Array.Clear(_people, _count, 1);
+
+            Shrink();
+        }
+
+
+        /// <summary>
+        /// Уменьшаем емкость массива вдвое, если фактическое количество людей
+        /// стало меньше половины (ну и если емкость больше начальной)
+        /// </summary>
+        private void Shrink()
+        {
+            if (_people.Length <= defoltBufer || 
+                _count > _people.Length / growthFactor)
+            {
+                return;
+            }
+
+            int newSize = _people.Length / 2;
+
+            if (newSize < _count)
+            {
+                newSize = _count;
+            }
+
+            Person[] newPeople = new Person[newSize];
+
+            for (int i = 0; i < _count; i++)
+            {
+                newPeople[i] = _people[i];
+            }
+
+            _people = newPeople;
         }
 
         /// <summary>
@@ -142,7 +179,6 @@
             {
                 _people[i] = null;
             }
-            //Array.Clear(_people, 0, _count);
 
             _count = 0;
         }
@@ -156,29 +192,16 @@
 
             for (int i = 0; i < _count; i++)
             {
-                Person currentPerson = _people[i];
-
-                //TODO: duplication
-                result += $"- имя: {currentPerson.Name}\n" +
-                          $"- фамилия: {currentPerson.Surname}\n" +
-                          $"- лет: {currentPerson.Age}\n" +
-                          $"- гендер: {currentPerson.Gender}\n" +
-                          "\n";
+                result += _people[i].GetInfo() + "\n";
             }
 
             return result;
         }
 
-        //TODO: refactor
+        //TODO: refactor +
         /// <summary>
         /// Возвращает количество людей в списке
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _count;
-            }
-        }
+        public int Count => _count;
     }
 }

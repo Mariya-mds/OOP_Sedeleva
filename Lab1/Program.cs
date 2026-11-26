@@ -1,4 +1,5 @@
 ﻿using PeopleLibrary;
+using System;
 
 /// <summary>
 /// Точка входа в программу
@@ -139,88 +140,75 @@ internal class Program
     /// </summary>
     private static Person ReadPersonFromConsole()
     {
-        //TODO: refactor
-        Console.Write("Введите имя: ");
-        string name = Console.ReadLine() ?? string.Empty;
-
-        Console.Write("Введите фамилию: ");
-        string surname = Console.ReadLine() ?? string.Empty;
-
-        // Ввод возраста с проверкой правильности
-
-        int age;
-
-        while (true)
-        {
-            Console.Write("Введите возвраст: ");
-            string ageInput = Console.ReadLine() ?? string.Empty;
-
-            if (!int.TryParse(ageInput, out age))
-            {
-                Console.WriteLine("Возраст должен быть числом. " +
-                    "Пожалуйста, введите значение повторно");
-                continue;
-            }
-
-            if (age < 0)
-            {
-                Console.WriteLine("Возраст не может быть отрицательным. " +
-                    "Пожалуйста, введите значение повторно");
-                continue;
-            }
-
-            break;
-        }
-
-        // Ввод пола с проверкой правильности
-
-        Gender gender;
-
-        while (true)
-        {
-            Console.Write("Введите гендер (Male/Female): ");
-            string genderInput = Console.ReadLine() ?? string.Empty;
-
-            if (Enum.TryParse(genderInput, true, out gender) &&
-                Enum.IsDefined(typeof(Gender), gender))
-            {
-                break;
-            }
-
-            Console.WriteLine("Некорректное значение пола. " +
-                "Введите Male или Female");
-        }
-
-        // Создание объекта Person с повторным вводом
+        //TODO: refactor +
+        Person person = new Person("Имя", "Фамилия", Person.MinAge, Gender.Male);
 
         while (true)
         {
             try
             {
-                return new Person(name, surname, age, gender);
+                Console.Write("Введите имя: ");
+                person.Name = Console.ReadLine() ?? string.Empty;
+                break;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+        }
+
+        while (true)
+        {
+            try
+            {
+                Console.Write("Введите фамилию: ");
+                person.Surname = Console.ReadLine() ?? string.Empty;
+                break;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+        }
+        while (true)
+        {
+            try
+            {
+                Console.Write("Введите возраст: ");
+                person.Age = int.Parse(Console.ReadLine() ?? string.Empty);
+                break;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Возраст должен быть целым числом!");
             }
             catch (ArgumentException exception)
             {
                 Console.WriteLine(exception.Message);
-                Console.WriteLine("Пожалуйста, проверьте введенные данные " +
-                    "и исправьте ошибку");
-
-                if (exception.ParamName == nameof(Person.Name))
-                {
-                    Console.Write("Введите имя: ");
-                    name = Console.ReadLine() ?? string.Empty;
-                }
-                else if (exception.ParamName == nameof(Person.Surname))
-                {
-                    Console.Write("Введите фамилию: ");
-                    surname = Console.ReadLine() ?? string.Empty;
-                }
-                else
-                {
-                    throw;
-                }
             }
         }
+
+        while (true)
+        {
+            try
+            {
+                Console.Write("Введите гендер (Male/Female): ");
+                person.Gender = Enum.Parse<Gender>(Console.ReadLine() ?? string.Empty, true);
+
+                if (!Enum.IsDefined(typeof(Gender), person.Gender))
+                {
+                    throw new ArgumentException();
+                }
+
+                break;
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Некорректное значение пола. Введите Male или Female");
+            }
+        }
+
+        return person;
     }
 
     /// <summary>
@@ -229,11 +217,8 @@ internal class Program
     private static void PrintPerson(Person person)
     {
         Console.WriteLine("Пипл:");
-        //TODO: duplication
-        Console.WriteLine($"- имя: {person.Name}");
-        Console.WriteLine($"- фамилия: {person.Surname}");
-        Console.WriteLine($"- лет: {person.Age}");
-        Console.WriteLine($"- гендер: {person.Gender}");
+        //TODO: duplication +
+        Console.WriteLine(person.GetInfo());
     }
 
 }
