@@ -140,43 +140,64 @@ internal class Program
     /// </summary>
     private static Person ReadPersonFromConsole()
     {
-        //TODO: refactor
+        //TODO: refactor +
         Person person = new Person("Имя", "Фамилия", Person.MinAge, Gender.Male);
 
-        while (true)
+        var actionList = new List<Tuple<string, Action<string>>>()
+    {
+        new("Введите имя: ",
+            input =>
+            {
+                person.Name = input;
+            }),
+        new("Введите фамилию: ",
+            input =>
+            {
+                person.Surname = input;
+            }),
+        new("Введите возраст: ",
+            input =>
+            {
+                person.Age = int.Parse(input);
+            }),
+        new("Введите гендер (Male/Female): ",
+            input =>
+            {
+                Gender parsedGender = Enum.Parse<Gender>(input, true);
+
+                if (!Enum.IsDefined(typeof(Gender), parsedGender))
+                {
+                    throw new ArgumentException(
+                        "Некорректное значение пола. Введите Male или Female");
+                }
+
+                person.Gender = parsedGender;
+            }),
+    };
+
+        foreach (var action in actionList)
         {
-            try
-            {
-                Console.Write("Введите имя: ");
-                person.Name = Console.ReadLine() ?? string.Empty;
-                break;
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
+            ActionHandler(action.Item1, action.Item2);
         }
 
-        while (true)
-        {
-            try
-            {
-                Console.Write("Введите фамилию: ");
-                person.Surname = Console.ReadLine() ?? string.Empty;
-                break;
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-        }
+        return person;
+    }
 
+    /// <summary>
+    /// Обрабатывает одно действия ввода
+    /// Выполняет действие и повторяет запрос при ошибке
+    /// </summary>
+    /// <param name="message">Приглашение к вводу</param>
+    /// <param name="action">Действие, выполняемое над введенной строкой</param>
+    private static void ActionHandler(string message, Action<string> action)
+    {
         while (true)
         {
             try
             {
-                Console.Write("Введите возраст: ");
-                person.Age = int.Parse(Console.ReadLine() ?? string.Empty);
+                Console.Write(message);
+                string input = Console.ReadLine() ?? string.Empty;
+                action(input);
                 break;
             }
             catch (FormatException)
@@ -188,29 +209,6 @@ internal class Program
                 Console.WriteLine(exception.Message);
             }
         }
-
-        while (true)
-        {
-            try
-            {
-                Console.Write("Введите гендер (Male/Female): ");
-                person.Gender = Enum.Parse<Gender>(Console.ReadLine() 
-                    ?? string.Empty, true);
-
-                if (!Enum.IsDefined(typeof(Gender), person.Gender))
-                {
-                    throw new ArgumentException();
-                }
-
-                break;
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Некорректное значение пола. Введите Male или Female");
-            }
-        }
-
-        return person;
     }
 
     /// <summary>
